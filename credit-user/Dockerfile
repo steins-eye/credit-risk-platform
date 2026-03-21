@@ -1,5 +1,5 @@
 # 基础镜像使用 JDK17
-FROM registry.cn-hangzhou.aliyuncs.com/dockerhub_mirror/openjdk:17-jdk-alpine
+FROM eclipse-temurin:17-jdk-alpine
 # 署名
 LABEL maintainer="Wu Junfeng"
 # 设置时区
