@@ -31,4 +31,10 @@
             <version>8.0.33</version>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>repo-yheqa</id>
+            <url>https://packages.aliyun.com/694050ca6b18c60a3d1f957d/maven/repo-yheqa</url>
+        </repository>
+    </distributionManagement>
 </project>
