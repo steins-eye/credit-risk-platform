@@ -50,7 +50,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>cn.edu.cqjtu.cs.creditriskplatform.credituser.CreditUserApplication</mainClass>
+                    <mainClass>cn.edu.cqjtu.cs.credit.user.CreditUserApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
