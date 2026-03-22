@@ -1,0 +1,55 @@
+server:
+  port: 8084
+  servlet:
+    context-path: /api/dispute
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html      # 访问地址：http://ip:8084/swagger-ui.html
+    tags-sorter: alpha          # 按字母排序
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs          # 基础元数据地址
+  packages-to-scan: cn.edu.cqjtu.cs.credit.dispute.controller # 只扫描纠纷模块的接口
+
+spring:
+  application:
+    name: credit-dispute
+  
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mylinux:3306/credit_dispute_test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: 6524316
+  
+  # MongoDB配置
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: credit_dispute
+      authentication-database: admin
+      username: admin
+      password: password
+  
+  # 服务发现配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: public
+        group: DEFAULT_GROUP
+
+# MyBatis Plus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 应用信息
+info:
+  app:
+    name: credit-dispute
+    version: 1.0.0
+    description: 信用风险管理平台 - 纠纷服务

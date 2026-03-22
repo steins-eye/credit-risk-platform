@@ -1,0 +1,50 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: credit-gateway
+  
+  # 网关配置
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true  # 开启从注册中心动态创建路由
+          lower-case-service-id: true
+      routes:
+        # 用户服务路由
+        - id: credit-user
+          uri: lb://credit-user
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - StripPrefix=1
+        # 交易服务路由
+        - id: credit-trade
+          uri: lb://credit-trade
+          predicates:
+            - Path=/api/trade/**
+          filters:
+            - StripPrefix=1
+        # 纠纷服务路由
+        - id: credit-dispute
+          uri: lb://credit-dispute
+          predicates:
+            - Path=/api/dispute/**
+          filters:
+            - StripPrefix=1
+    
+    # 服务发现配置
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: public
+        group: DEFAULT_GROUP
+
+# 应用信息
+info:
+  app:
+    name: credit-gateway
+    version: 1.0.0
+    description: 信用风险管理平台 - API网关

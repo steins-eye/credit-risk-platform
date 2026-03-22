@@ -27,4 +27,28 @@
             <version>${jjwt.version}</version>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>repo-yheqa</id>
+            <url>https://packages.aliyun.com/694050ca6b18c60a3d1f957d/maven/repo-yheqa</url>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal> </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>cn.edu.cqjtu.cs.credit.gateway.CreditGatewayApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -1,0 +1,53 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /api/trade
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html      # 访问地址：http://ip:8083/swagger-ui.html
+    tags-sorter: alpha          # 按字母排序
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs          # 基础元数据地址
+  packages-to-scan: cn.edu.cqjtu.cs.credit.trade.controller # 只扫描交易模块的接口
+
+spring:
+  application:
+    name: credit-trade
+  
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mylinux:3306/credit_trade_test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: 6524316
+  
+  # RabbitMQ配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+  
+  # 服务发现配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: public
+        group: DEFAULT_GROUP
+
+# MyBatis Plus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 应用信息
+info:
+  app:
+    name: credit-trade
+    version: 1.0.0
+    description: 信用风险管理平台 - 交易服务

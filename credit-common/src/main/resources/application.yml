@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/common
+
+spring:
+  application:
+    name: credit-common
+  
+  # 数据源配置 - 通用模块可能不需要数据库连接
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mylinux:3306/credit_common_test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: 6524316
+
+# 应用信息
+info:
+  app:
+    name: credit-common
+    version: 1.0.0
+    description: 信用风险管理平台 - 通用工具模块

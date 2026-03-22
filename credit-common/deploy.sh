@@ -1,6 +1,6 @@
 # 1. 定义工作目录
-IMAGE_NAME="credit-user"
-CONTAINER_NAME="credit-user"
+IMAGE_NAME="credit-common"
+CONTAINER_NAME="credit-common"
 
 echo "开始部署模块: $IMAGE_NAME"
 
@@ -21,7 +21,7 @@ echo "正在启动新容器..."
 docker run -d \
   --name $CONTAINER_NAME \
   --restart always \
-  -p 8090:8081 \
+  -p 8091:8081 \
   -e "JAVA_OPTS=-Xms128m -Xmx256m" \
   $IMAGE_NAME:latest
 

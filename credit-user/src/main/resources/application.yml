@@ -3,9 +3,15 @@ server:
   servlet:
     context-path: /api/user
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html      # 访问地址：http://ip:8081/swagger-ui.html
+    tags-sorter: alpha          # 按字母排序
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs          # 基础元数据地址
+  packages-to-scan: cn.edu.cqjtu.cs.credit.user.controller
 spring:
-  application:
-    name: credit-user
   
   # 数据源配置
   datasource:
