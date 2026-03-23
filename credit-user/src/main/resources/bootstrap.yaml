@@ -5,7 +5,7 @@ spring:
     active: test
   cloud:
     nacos:
-      server-addr: mylinux:8848
+      server-addr: steinseye.top:8848
       username: nacos  # 添加用户名
       password: nacos  # 添加密码
       discovery:

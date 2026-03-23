@@ -12,10 +12,9 @@ springdoc:
     path: /v3/api-docs          # 基础元数据地址
   packages-to-scan: cn.edu.cqjtu.cs.credit.user.controller
 spring:
-  
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mylinux:3306/credit_user_test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql://steinseye.top:3306/credit_user_test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: root
     password: 6524316
