@@ -2,13 +2,26 @@
 
 基于 Spring Cloud 架构的分布式信用风险管理系统，提供用户管理、权限控制、交易处理和纠纷裁决等功能。
 
+## 项目概述
+
+信用风险管理系统是一个基于微服务架构的企业级应用，旨在为金融机构提供全面的信用风险管理解决方案。系统采用现代化的技术栈，具备高可用性、可扩展性和安全性。
+
+### 核心功能
+
+- **用户认证与授权** - 基于JWT的认证机制和RBAC权限控制
+- **信用评估** - 用户信用评级和风险评估
+- **交易管理** - 交易记录、审批流程和风险监控
+- **纠纷处理** - 纠纷申报、仲裁裁决和结果跟踪
+- **系统监控** - 服务健康检查、日志追踪和性能监控
+
 ## 项目架构
 
 本项目采用微服务架构，包含以下核心模块：
 
 ### 服务模块
 
-- **credit-gateway** - 网关服务，统一入口和路由管理
+- **credit-gateway** - 网关服务，统一入口、路由管理和鉴权过滤
+- **credit-auth** - 认证中心服务，负责用户登录、JWT Token签发和验证
 - **credit-user** - 用户与信用服务，提供用户管理、权限控制等功能
 - **credit-trade** - 交易服务，处理交易相关业务
 - **credit-dispute** - 纠纷裁决服务，处理纠纷和仲裁业务
@@ -19,43 +32,38 @@
 
 ## 技术栈
 
+### 后端技术
 - **Java 17** - 编程语言
-- **Spring Boot 3.x** - 应用框架
-- **Spring Cloud** - 微服务框架
-- **MyBatis Plus** - ORM 框架
-- **MySQL** - 数据库
+- **Spring Boot 3.2.4** - 应用框架
+- **Spring Cloud 2023.0.1** - 微服务框架
+- **Spring Cloud Alibaba 2023.0.1.0** - 微服务组件
+- **MyBatis Plus 3.5.10.1** - ORM 框架
+- **MySQL 8.0.33** - 数据库
 - **Redis** - 缓存
 - **Nacos** - 服务注册与发现、配置中心
 
-## 数据库设计
-
-系统采用标准的 RBAC (基于角色的访问控制) 权限模型，包含以下核心表：
-
-### 权限资源表 (sys_permission)
-存储具体的菜单、按钮或 API 路径
-
-### 角色表 (sys_role)
-角色定义，如 Arbitrator、Admin 等
-
-### 用户表 (sys_user)
-用户基础信息表
-
-### 用户-角色关联表 (sys_user_role)
-多对多关系，用户与角色关联
-
-### 角色-权限关联表 (sys_role_permission)
-多对多关系，角色与权限关联
+### 开发工具
+- **Maven 3.6+** - 项目构建工具
+- **Lombok 1.18.30** - 代码简化工具
+- **JJWT 0.12.5** - JWT令牌处理
 
 ## 快速开始
 
 ### 环境要求
 
-- JDK 17+
-- Maven 3.6+
-- MySQL 8.0+
-- Redis 6.0+
+#### 必需环境
+- **JDK 17+** - Java 开发环境
+- **Maven 3.6+** - 项目构建工具
+- **MySQL 8.0+** - 数据库服务
+- **Redis 6.0+** - 缓存服务
+
+#### 可选环境
+- **Nacos 2.2+** - 服务注册与配置中心（推荐用于生产环境）
+- **Docker** - 容器化部署（可选）
 
 ### 构建项目
+
+使用项目提供的 Maven 配置文件确保依赖正确下载：
 
 ```bash
 # 构建所有模块
@@ -63,72 +71,121 @@
 
 # 构建单个模块（如 credit-user）
 cd credit-user
-./mvnw clean install -s ../maven-settings.xml
+../mvnw clean install -s ../maven-settings.xml
 ```
 
-### 配置说明
+### 服务配置
 
-1. 修改各模块的 `application.yml` 文件中的数据库连接信息
-2. 确保 Redis 和 MySQL 服务正常运行
-3. 配置 Nacos 服务地址（如果需要）
+1. **修改数据库连接**：编辑各模块的 `application.yml` 文件
+2. **配置 Redis**：设置 Redis 连接信息
+3. **配置 Nacos**：设置服务注册中心地址
 
 ### 启动服务
 
+#### 开发环境启动
+
 ```bash
-# 启动 credit-user 服务
+# 启动认证服务
+cd credit-auth
+../mvnw spring-boot:run -s ../maven-settings.xml
+
+# 启动用户服务（新终端）
 cd credit-user
+../mvnw spring-boot:run -s ../maven-settings.xml
+
+# 启动网关服务（新终端）
+cd credit-gateway
 ../mvnw spring-boot:run -s ../maven-settings.xml
 ```
 
-## API 接口
+## 开发指南
 
-### 用户管理接口
-
-- `GET /api/user` - 获取用户列表
-- `GET /api/user/{userId}` - 根据ID获取用户信息
-- `POST /api/user` - 创建用户
-- `PUT /api/user/{userId}` - 更新用户信息
-- `DELETE /api/user/{userId}` - 删除用户
-
-### 角色管理接口
-
-- `GET /api/role` - 获取角色列表
-- `GET /api/role/{roleId}` - 根据ID获取角色信息
-- `POST /api/role` - 创建角色
-- `PUT /api/role/{roleId}` - 更新角色信息
-- `DELETE /api/role/{roleId}` - 删除角色
-
-### 权限管理接口
-
-- `GET /api/permission` - 获取权限列表
-- `GET /api/permission/{permissionId}` - 根据ID获取权限信息
-- `POST /api/permission` - 创建权限
-- `PUT /api/permission/{permissionId}` - 更新权限信息
-- `DELETE /api/permission/{permissionId}` - 删除权限
-
-## 项目结构
-
+### 项目结构
 ```
 credit-risk-platform/
 ├── credit-common/          # 公共模块
-│   ├── src/main/java/cn/edu/cqjtu/cs/credit/common/
-│   │   └── entity/         # 公共实体类
-│   └── pom.xml
-├── credit-user/            # 用户服务
-│   ├── src/main/java/cn/edu/cqjtu/cs/credit/user/
-│   │   ├── entity/         # 实体类
-│   │   ├── mapper/         # MyBatis Mapper
-│   │   ├── service/        # 业务逻辑层
-│   │   └── controller/     # 控制器层
-│   ├── src/main/resources/
-│   │   └── application.yml # 配置文件
-│   └── pom.xml
-├── credit-trade/           # 交易服务
-├── credit-dispute/         # 纠纷裁决服务
-├── credit-gateway/         # 网关服务
-├── maven-settings.xml      # Maven 配置文件
-└── README.md              # 项目说明文档
+├── credit-auth/           # 认证服务
+├── credit-user/           # 用户服务
+├── credit-trade/          # 交易服务
+├── credit-dispute/        # 纠纷服务
+├── credit-gateway/        # 网关服务
+└── pom.xml               # 父工程配置
 ```
+
+### 代码规范
+
+1. **命名规范**
+   - 包名：全小写，使用公司域名倒序
+   - 类名：大驼峰命名法
+   - 方法名：小驼峰命名法
+   - 常量：全大写，下划线分隔
+
+2. **代码风格**
+   - 使用 Lombok 简化代码
+   - 遵循阿里巴巴 Java 开发规范
+   - 统一使用 4 个空格缩进
+
+3. **API 设计原则**
+   - RESTful 风格
+   - 统一响应格式
+   - 适当的 HTTP 状态码
+   - 完整的错误处理
+
+### 测试规范
+
+1. **单元测试**：每个服务类应有对应的单元测试
+2. **集成测试**：测试服务间的集成调用
+3. **API 测试**：使用 Postman 或 Swagger 进行接口测试
+
+## 贡献指南
+
+### 开发流程
+
+1. **Fork 项目**：从主仓库 Fork 到个人账户
+2. **创建分支**：基于 `develop` 分支创建功能分支
+3. **开发功能**：在功能分支上实现新功能或修复 bug
+4. **提交代码**：遵循约定式提交规范
+5. **创建 PR**：向主仓库发起 Pull Request
+6. **代码审查**：等待项目维护者审查代码
+7. **合并代码**：审查通过后合并到主分支
+
+### 提交规范
+
+使用约定式提交格式：
+```
+<类型>[可选的作用域]: <描述>
+
+[可选的正文]
+
+[可选的脚注]
+```
+
+**类型说明：**
+- `feat`：新功能
+- `fix`：修复 bug
+- `docs`：文档更新
+- `style`：代码格式调整
+- `refactor`：代码重构
+- `test`：测试相关
+- `chore`：构建过程或辅助工具变动
+
+### 分支管理
+
+- `main`：主分支，用于生产环境发布
+- `develop`：开发分支，集成所有功能
+- `feature/*`：功能分支，开发新功能
+- `bugfix/*`：修复分支，修复 bug
+- `release/*`：发布分支，准备版本发布
+
+## 许可证
+
+本项目采用 MIT 许可证。详见 [LICENSE](LICENSE) 文件。
+
+## 联系方式
+
+- **项目维护者**：重庆交通大学计算机学院
+- **邮箱**：contact@cqjtu.edu.cn
+- **项目地址**：https://github.com/cqjtu/credit-risk-platform
 
 ## 开发规范
 
@@ -145,20 +202,6 @@ credit-risk-platform/
 - 主键字段使用 `xxx_id` 命名
 - 时间字段使用 `create_time`、`update_time` 等标准命名
 
-## 部署说明
-
-### Docker 部署
-
-每个模块都提供了 Dockerfile，可以方便地进行容器化部署：
-
-```bash
-# 构建镜像
-cd credit-user
-docker build -t credit-user:latest .
-
-# 运行容器
-docker run -d -p 8081:8081 credit-user:latest
-```
 
 ### 生产环境配置
 
@@ -166,14 +209,6 @@ docker run -d -p 8081:8081 credit-user:latest
 - 配置数据库连接池参数
 - 启用 Redis 集群模式
 - 配置日志收集和监控
-
-## 贡献指南
-
-1. Fork 本项目
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 创建 Pull Request
 
 ## 许可证
 
@@ -184,11 +219,3 @@ docker run -d -p 8081:8081 credit-user:latest
 - 项目维护者：wjf
 - 邮箱：17671220626@139.com
 - 项目地址：https://github.com/cqjtu/credit-risk-platform
-
-## 更新日志
-
-### v1.0.0 (2026-03-23)
-- 初始化项目结构
-- 实现用户服务基础功能
-- 完成 RBAC 权限模型设计
-- 提供完整的 API 接口文档

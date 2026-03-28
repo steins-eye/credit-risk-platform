@@ -1,6 +1,6 @@
 spring:
   application:
-    name: credit-user
+    name: credit-gateway
   profiles:
     active: test
   cloud:

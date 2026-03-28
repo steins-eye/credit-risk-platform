@@ -20,10 +20,11 @@
 
 	<modules>
 		<module>credit-common</module>
-		<module>credit-gateway</module>
 		<module>credit-user</module>
 		<module>credit-trade</module>
 		<module>credit-dispute</module>
+		<module>credit-auth</module>
+		<module>credit-gateway</module>
 	</modules>
 
 	<properties>

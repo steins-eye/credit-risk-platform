@@ -1,0 +1,1 @@
+使用主目录下的mvnw文件配合maven-settings.xml文件进行构建maven项目

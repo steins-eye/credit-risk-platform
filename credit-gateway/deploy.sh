@@ -1,6 +1,6 @@
 # 1. 定义工作目录
-IMAGE_NAME="credit-user"
-CONTAINER_NAME="credit-user"
+IMAGE_NAME="credit-gateway"
+CONTAINER_NAME="credit-gateway"
 
 echo "开始部署模块: $IMAGE_NAME"
 
@@ -22,8 +22,7 @@ docker run -d \
   --name $CONTAINER_NAME \
   --restart always \
   --network nacos_net \
-  -e "NACOS_SERVER=nacos:8848"
-  -p 8091:8081 \
+  -p 8090:8080 \
   -e "JAVA_OPTS=-Xms128m -Xmx256m" \
   $IMAGE_NAME:latest
 

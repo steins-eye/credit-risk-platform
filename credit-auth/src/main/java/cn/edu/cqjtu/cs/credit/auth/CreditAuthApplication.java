@@ -1,18 +1,20 @@
-package cn.edu.cqjtu.cs.credit.gateway;
+package cn.edu.cqjtu.cs.credit.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication(scanBasePackages = {
-    "cn.edu.cqjtu.cs.credit.gateway", 
-    "cn.edu.cqjtu.cs.credit.common" // 只要包名对，就能扫到 Jar 包里的类
+        "cn.edu.cqjtu.cs.credit.auth",
+        "cn.edu.cqjtu.cs.credit.common",
 })
 @EnableDiscoveryClient
-public class CreditGatewayApplication {
+@EnableFeignClients
+public class CreditAuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CreditGatewayApplication.class, args);
+        SpringApplication.run(CreditAuthApplication.class, args);
     }
 
 }

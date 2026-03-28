@@ -47,6 +47,12 @@ public class SysUserController {
         return Result.success(list);
     }
 
+    @GetMapping("/username/{username}")
+    public Result<SysUser> getByUsername(@PathVariable String username) {
+        SysUser sysUser = sysUserService.lambdaQuery().eq(SysUser::getUsername, username).one();
+        return Result.success(sysUser);
+    }
+
     @GetMapping("/page")
     public Result<Page<SysUser>> page(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         Page<SysUser> page = sysUserService.page(new Page<>(pageNum, pageSize));

@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+spring:
+  data:
+    redis:
+      host: steinseye.top
+      port: 26379
+      password: 8f8H2yJGLjHmZAMf
+      database: 0
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
