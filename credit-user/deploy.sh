@@ -22,7 +22,6 @@ docker run -d \
   --name $CONTAINER_NAME \
   --restart always \
   --network nacos_net \
-  -e "NACOS_SERVER=nacos:8848"
   -p 8091:8081 \
   -e "JAVA_OPTS=-Xms128m -Xmx256m" \
   $IMAGE_NAME:latest
