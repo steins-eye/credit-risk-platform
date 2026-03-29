@@ -36,7 +36,7 @@ public class CreditGatewayApplication {
     public static class AuthGrayLoadBalancerConfiguration {
 
         @Bean
-        ReactorLoadBalancer<ServiceInstance> versionGrayLoadBalancer(
+        ReactorLoadBalancer<ServiceInstance> authGrayLoadBalancer(
                 LoadBalancerClientFactory loadBalancerClientFactory) {
             return new GrayLoadBalancer(
                     loadBalancerClientFactory.getLazyProvider("credit-auth", ServiceInstanceListSupplier.class),
@@ -48,7 +48,7 @@ public class CreditGatewayApplication {
     public static class DisputeGrayLoadBalancerConfiguration {
 
         @Bean
-        ReactorLoadBalancer<ServiceInstance> versionGrayLoadBalancer(
+        ReactorLoadBalancer<ServiceInstance> disputeGrayLoadBalancer(
                 LoadBalancerClientFactory loadBalancerClientFactory) {
             return new GrayLoadBalancer(
                     loadBalancerClientFactory.getLazyProvider("credit-dispute", ServiceInstanceListSupplier.class),
@@ -61,7 +61,7 @@ public class CreditGatewayApplication {
         
 
         @Bean
-        ReactorLoadBalancer<ServiceInstance> versionGrayLoadBalancer(
+        ReactorLoadBalancer<ServiceInstance> tradeGrayLoadBalancer(
                 LoadBalancerClientFactory loadBalancerClientFactory) {
             return new GrayLoadBalancer(
                     loadBalancerClientFactory.getLazyProvider("credit-trade", ServiceInstanceListSupplier.class),
@@ -73,7 +73,7 @@ public class CreditGatewayApplication {
     public static class UserGrayLoadBalancerConfiguration {
 
         @Bean
-        ReactorLoadBalancer<ServiceInstance> versionGrayLoadBalancer(
+        ReactorLoadBalancer<ServiceInstance> userGrayLoadBalancer(
                 LoadBalancerClientFactory loadBalancerClientFactory) {
             return new GrayLoadBalancer(
                     loadBalancerClientFactory.getLazyProvider("credit-user", ServiceInstanceListSupplier.class),
