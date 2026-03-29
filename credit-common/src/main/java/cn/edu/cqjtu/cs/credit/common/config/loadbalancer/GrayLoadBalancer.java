@@ -1,4 +1,4 @@
-package cn.edu.cqjtu.cs.credit.gateway.config;
+package cn.edu.cqjtu.cs.credit.common.config.loadbalancer;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
