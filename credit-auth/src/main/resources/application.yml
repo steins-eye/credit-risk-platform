@@ -1,5 +1,6 @@
 server:
   port: 8081
+  forward-headers-strategy: framework # 关键：让 Spring 识别 X-Forwarded-* 头
 
 spring:
   data:
@@ -11,3 +12,12 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html 
+    tags-sorter: alpha       
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs   
+  packages-to-scan: cn.edu.cqjtu.cs.credit.auth.controller

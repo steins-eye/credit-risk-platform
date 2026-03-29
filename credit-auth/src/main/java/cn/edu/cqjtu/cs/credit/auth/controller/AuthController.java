@@ -6,6 +6,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import cn.edu.cqjtu.cs.credit.auth.util.PasswordUtil;
 import cn.edu.cqjtu.cs.credit.common.entity.Result;
 import io.jsonwebtoken.Claims;
+import jakarta.validation.constraints.AssertTrue;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

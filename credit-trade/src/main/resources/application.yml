@@ -1,5 +1,6 @@
 server:
   port: 8083
+  forward-headers-strategy: framework # 关键：让 Spring 识别 X-Forwarded-* 头
 
 springdoc:
   swagger-ui:
