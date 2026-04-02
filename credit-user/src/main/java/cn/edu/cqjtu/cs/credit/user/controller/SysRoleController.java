@@ -1,7 +1,7 @@
 package cn.edu.cqjtu.cs.credit.user.controller;
 
 import cn.edu.cqjtu.cs.credit.common.entity.Result;
-import cn.edu.cqjtu.cs.credit.user.entity.SysRole;
+import cn.edu.cqjtu.cs.credit.common.entity.po.SysRole;
 import cn.edu.cqjtu.cs.credit.user.service.SysRoleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class SysRoleController {
 
     @PutMapping("/{roleId}")
     public Result<SysRole> update(@PathVariable Long roleId, @RequestBody SysRole sysRole) {
-        sysRole.setRoleId(roleId);
+        sysRole.setId(roleId);
         sysRoleService.updateById(sysRole);
         return Result.success(sysRole);
     }

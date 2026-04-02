@@ -1,7 +1,7 @@
 package cn.edu.cqjtu.cs.credit.user.controller;
 
 import cn.edu.cqjtu.cs.credit.common.entity.Result;
-import cn.edu.cqjtu.cs.credit.user.entity.SysUser;
+import cn.edu.cqjtu.cs.credit.common.entity.po.SysUser;
 import cn.edu.cqjtu.cs.credit.user.service.SysUserService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class SysUserController {
 
     @PutMapping("/{userId}")
     public Result<SysUser> update(@PathVariable Long userId, @RequestBody SysUser sysUser) {
-        sysUser.setUserId(userId);
+        sysUser.setId(userId);
         sysUserService.updateById(sysUser);
         return Result.success(sysUser);
     }

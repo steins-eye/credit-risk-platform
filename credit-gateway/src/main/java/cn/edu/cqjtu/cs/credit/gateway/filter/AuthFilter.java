@@ -1,6 +1,10 @@
 package cn.edu.cqjtu.cs.credit.gateway.filter;
 
+import cn.edu.cqjtu.cs.credit.common.entity.Constants;
+import cn.edu.cqjtu.cs.credit.common.entity.Result;
 import cn.edu.cqjtu.cs.credit.common.util.JwtUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -32,7 +36,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
     @Autowired
     private ReactiveStringRedisTemplate redisTemplate;
 
-    private static final String REDIS_TOKEN_KEY_PREFIX = "auth:token:";
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private List<String> whitelist = new ArrayList<>(); // 提供默认值防止 NPE
 
@@ -46,12 +50,13 @@ public class AuthFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
 
-        System.out.println("Request Path: " + path + " Whitelist: " + whitelist);
-
         // 检查是否在白名单中
         if (isWhitelisted(path)) {
+            System.out.println("请求路径在白名单中，无需认证：" + path);
             return chain.filter(exchange);
         }
+
+        System.out.println("请求路径不在白名单中，需要认证：" + path);
 
         // 从Header中获取Token
         String token = extractToken(request);
@@ -67,10 +72,9 @@ public class AuthFilter implements GlobalFilter, Ordered {
         // 解析Token
         Long userId = jwtUtil.getUserIdFromToken(token);
         String username = jwtUtil.getUsernameFromToken(token);
-        String roleKeys = jwtUtil.getRoleKeysFromToken(token);
 
         // 检查Redis中是否存在该token
-        String redisKey = REDIS_TOKEN_KEY_PREFIX + userId;
+        String redisKey = Constants.REDIS_TOKEN_KEY_PREFIX + userId;
         return redisTemplate.hasKey(redisKey)
                 .flatMap(exists -> {
                     if (Boolean.TRUE.equals(exists)) {
@@ -78,7 +82,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
                         ServerHttpRequest mutatedRequest = request.mutate()
                                 .header("X-User-Id", String.valueOf(userId))
                                 .header("X-Username", username)
-                                .header("X-Role-Keys", roleKeys != null ? roleKeys : "")
                                 .build();
                         return chain.filter(exchange.mutate().request(mutatedRequest).build());
                     } else {
@@ -94,11 +97,21 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private Mono<Void> unauthorizedResponse(ServerWebExchange exchange, String message) {
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        // 手动序列化Result对象为JSON
-        String json = "{\"code\":401,\"message\":\"" + message + "\",\"data\":null}";
-        byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
-        DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
-        return exchange.getResponse().writeWith(Mono.just(buffer));
+        
+        // 使用ObjectMapper序列化Result对象为JSON
+        Result<Void> result = Result.error(401, message);
+        try {
+            String json = objectMapper.writeValueAsString(result);
+            byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
+            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+            return exchange.getResponse().writeWith(Mono.just(buffer));
+        } catch (JsonProcessingException e) {
+            // 如果序列化失败，返回默认的错误信息
+            String fallbackJson = "{\"code\":500,\"message\":\"服务器内部错误\",\"data\":null}";
+            byte[] bytes = fallbackJson.getBytes(StandardCharsets.UTF_8);
+            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+            return exchange.getResponse().writeWith(Mono.just(buffer));
+        }
     }
 
     private String extractToken(ServerHttpRequest request) {

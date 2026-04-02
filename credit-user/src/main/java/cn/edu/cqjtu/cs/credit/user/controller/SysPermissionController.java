@@ -1,10 +1,11 @@
 package cn.edu.cqjtu.cs.credit.user.controller;
 
 import cn.edu.cqjtu.cs.credit.common.entity.Result;
-import cn.edu.cqjtu.cs.credit.user.entity.SysPermission;
+import cn.edu.cqjtu.cs.credit.common.entity.po.SysPermission;
 import cn.edu.cqjtu.cs.credit.user.service.SysPermissionService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class SysPermissionController {
     private SysPermissionService sysPermissionService;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('sys:permission:create')")
     public Result<SysPermission> create(@RequestBody SysPermission sysPermission) {
         sysPermissionService.save(sysPermission);
         return Result.success(sysPermission);
@@ -24,7 +26,7 @@ public class SysPermissionController {
 
     @PutMapping("/{permissionId}")
     public Result<SysPermission> update(@PathVariable Long permissionId, @RequestBody SysPermission sysPermission) {
-        sysPermission.setPermissionId(permissionId);
+        sysPermission.setId(permissionId);
         sysPermissionService.updateById(sysPermission);
         return Result.success(sysPermission);
     }
@@ -36,6 +38,7 @@ public class SysPermissionController {
     }
 
     @GetMapping("/{permissionId}")
+    @PreAuthorize("hasAuthority('sys:permission:read')")
     public Result<SysPermission> getById(@PathVariable Long permissionId) {
         SysPermission sysPermission = sysPermissionService.getById(permissionId);
         return Result.success(sysPermission);

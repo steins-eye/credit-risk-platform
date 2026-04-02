@@ -6,8 +6,9 @@ import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.cloud.client.ServiceInstance;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-
+@Configuration(proxyBeanMethods = false)
 public class UserGrayLoadBalancerConfiguration {
 
     @Bean

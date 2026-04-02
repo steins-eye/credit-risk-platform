@@ -17,3 +17,25 @@ spring:
     url: jdbc:mysql://steinseye.top:58213/credit_user_test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: credit_user_test_app
     password: EoMHEVLL2CwUJb2WJaYj
+  data:
+    redis:
+      host: steinseye.top
+      port: 26379
+      password: 8f8H2yJGLjHmZAMf
+      database: 0
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+
+
+
+mybatis-plus:
+  # 配置 XML 文件的扫描路径
+  mapper-locations: classpath:mapper/*.xml
+  # 配置实体类扫描路径，指向common模块中的实体类
+  type-aliases-package: cn.edu.cqjtu.cs.credit.common.entity.po
+  
+  # 顺便配置一下日志，方便在控制台看到执行的 SQL
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

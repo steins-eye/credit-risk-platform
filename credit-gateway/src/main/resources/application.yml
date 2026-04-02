@@ -21,13 +21,33 @@ spring:
           predicates:
             - Path=/api/user/**
 
-        - id: credit-auth
-          uri: lb://credit-auth
+        - id: credit-product
+          uri: lb://credit-product
           filters:
             - StripPrefix=2
           predicates:
-            - Path=/api/auth/**
-        # 其他服务可以继续添加
+            - Path=/api/product/**
+
+        - id: credit-notification
+          uri: lb://credit-notification
+          filters:
+            - StripPrefix=2
+          predicates:
+            - Path=/api/notification/**
+
+        - id: credit-trade
+          uri: lb://credit-trade
+          filters:
+            - StripPrefix=2
+          predicates:
+            - Path=/api/trade/**
+
+        - id: credit-dispute
+          uri: lb://credit-dispute
+          filters:
+            - StripPrefix=2
+          predicates:
+            - Path=/api/dispute/**
       globalcors:
         cors-configurations:
           '[/**]':

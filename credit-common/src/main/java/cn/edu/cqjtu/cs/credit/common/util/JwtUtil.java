@@ -14,7 +14,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    @Value("${jwt.secret:credit-risk-platform-secret-key}")
+    @Value("${jwt.secret:CreditRiskPlatformSecretKey2026!#}")
     private String secret;
 
     @Value("${jwt.expiration:86400000}")
@@ -24,11 +24,10 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateToken(Long userId, String username, String roleKeys) {
+    public String generateToken(Long userId, String username) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("username", username);
-        claims.put("roleKeys", roleKeys);
         return Jwts.builder()
                 .claims(claims)
                 .issuedAt(new Date())
@@ -53,11 +52,6 @@ public class JwtUtil {
     public String getUsernameFromToken(String token) {
         Claims claims = parseToken(token);
         return claims.get("username", String.class);
-    }
-
-    public String getRoleKeysFromToken(String token) {
-        Claims claims = parseToken(token);
-        return claims.get("roleKeys", String.class);
     }
 
     public boolean validateToken(String token) {

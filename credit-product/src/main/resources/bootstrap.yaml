@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        namespace: public
+        group: DEFAULT_GROUP
+        server-addr: localhost:8848
+        file-extension: yaml
+        shared-configs:
+          - data-id: common.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+        extension-configs:
+          - data-id: datasource.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: mybatis-plus.yaml
+            group: DEFAULT_GROUP
+            refresh: true

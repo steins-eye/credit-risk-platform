@@ -11,7 +11,10 @@ import cn.edu.cqjtu.cs.credit.common.config.loadbalancer.DisputeGrayLoadBalancer
 import cn.edu.cqjtu.cs.credit.common.config.loadbalancer.TradeGrayLoadBalancerConfiguration;
 import cn.edu.cqjtu.cs.credit.common.config.loadbalancer.UserGrayLoadBalancerConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "cn.edu.cqjtu.cs.credit.user",
+        "cn.edu.cqjtu.cs.credit.common",
+})
 @MapperScan("cn.edu.cqjtu.cs.credit.user.mapper")
 @LoadBalancerClients(value = {
         @LoadBalancerClient(name = "credit-trade", configuration = TradeGrayLoadBalancerConfiguration.class),
