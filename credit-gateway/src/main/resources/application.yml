@@ -52,7 +52,7 @@ spring:
         cors-configurations:
           '[/**]':
             allowed-origin-patterns:
-              - "*"
+              - "*.steinseye.top"
             allowed-methods:
               - GET
               - POST
