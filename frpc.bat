@@ -1,0 +1,1 @@
+"D:\frp_0.68.0_windows_amd64\frpc.exe" -c "D:\frp_0.68.0_windows_amd64\frpc.toml"

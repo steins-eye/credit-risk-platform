@@ -73,5 +73,36 @@ whitelist:
   - "/**/swagger-ui/**"
   - "/**/webjars/**"            # 静态资源放行
   - "/**/swagger-resources/**"  # Swagger 资源定义接口
+  - "/**/doc.html"
 
-  
+knife4j:
+  gateway:
+    enabled: true
+    # 指定手动配置模式（更精准）
+    strategy: manual
+    routes:
+      - name: 用户中心
+        url: /api/user/v3/api-docs
+        service-name: credit-user
+        context-path: /api/user
+        order: 1
+      - name: 产品中心
+        url: /api/product/v3/api-docs
+        service-name: credit-product
+        context-path: /api/product
+        order: 2
+      - name: 通知中心
+        url: /api/notification/v3/api-docs
+        service-name: credit-notification
+        context-path: /api/notification
+        order: 3
+      - name: 交易中心
+        url: /api/trade/v3/api-docs
+        service-name: credit-trade
+        context-path: /api/trade
+        order: 4  
+      - name: 争议中心
+        url: /api/dispute/v3/api-docs
+        service-name: credit-dispute
+        context-path: /api/dispute
+        order: 5
